@@ -1,5 +1,7 @@
 # Arrow Duel
 
+![Arrow Duel gameplay screenshot](screenshots/duel-preview.png)
+
 Arrow Duel is a two-player real-time browser archery game for a computer networking project. Each browser sends small input intents to a Node.js referee. The server pairs players, runs isolated matches, simulates movement, charge, projectiles, wind and hit detection, and broadcasts snapshots. The page draws every visual procedurally and synthesizes sound locally, so play makes no third-party runtime requests.
 
 ## Requirements and run
