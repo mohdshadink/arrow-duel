@@ -109,7 +109,10 @@ const originalPair = pair;
 pair = function (a, b) { a.slot = 0; b.slot = 1; return originalPair(a, b); };
 const heartbeat = setInterval(() => { for (const ws of wss.clients) { if (!ws.isAlive) { ws.terminate(); continue; } ws.isAlive = false; ws.ping(); } }, 5000);
 const port = Number(process.env.PORT) || 3000;
-server.on('error', e => { if (e.code === 'EADDRINUSE') { console.error(`Port ${port} is already in use. Try: set PORT=3001 (Windows) or PORT=3001 (macOS/Linux), then start again.`); clearInterval(heartbeat); process.exit(1); } else throw e; });
+let startupFailed = false;
+function handleServerError(e) { if (startupFailed) return; startupFailed = true; if (e.code === 'EADDRINUSE') console.error(`Port ${port} is already in use. Try: set PORT=3001 (Windows) or PORT=3001 (macOS/Linux), then start again.`); else console.error('Server startup failed:', e.stack || e); clearInterval(heartbeat); process.exit(1); }
+server.on('error', handleServerError);
+wss.on('error', handleServerError);
 server.listen(port, '0.0.0.0', () => { const addresses = []; for (const entries of Object.values(os.networkInterfaces())) for (const n of entries || []) if (n.family === 'IPv4' && !n.internal) addresses.push(n.address); addresses.sort((a,b) => Number(/^(192\.168|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(b)) - Number(/^(192\.168|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(a))); console.log('\n=== ARROW DUEL SERVER ==='); console.log(`Local:  http://localhost:${port}`); addresses.forEach(ip => console.log(`LAN:    http://${ip}:${port}`)); console.log('Open the LAN URL on the other laptop.\n'); });
 function shutdown() { clearInterval(heartbeat); for (const room of rooms.values()) destroyRoom(room); for (const ws of wss.clients) ws.close(1001, 'Server shutting down'); wss.close(() => server.close(() => process.exit(0))); setTimeout(() => process.exit(0), 1500).unref(); }
 process.on('SIGINT', shutdown);
