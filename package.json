@@ -1,0 +1,10 @@
+{
+  "name": "arrow-duel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Authoritative real-time two-player browser archery game",
+  "main": "server.js",
+  "scripts": { "start": "node server.js", "bot": "node bot.js", "test": "node test/smoke.js" },
+  "dependencies": { "express": "^4.21.2", "ws": "^8.18.0" },
+  "engines": { "node": ">=18" }
+}

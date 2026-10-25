@@ -1,0 +1,3 @@
+(function (root, factory) { const value = factory(); if (typeof module === 'object' && module.exports) module.exports = value; else root.ARROW_CONST = value; })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  return Object.freeze({ VERSION: '1.0', W: 1280, H: 720, GROUND: 620, TICK: 60, SNAPSHOT_EVERY: 2, MOVE_SPEED: 220, AIM_SPEED: 40, AIM_MIN: 5, AIM_MAX: 85, CHARGE_SECONDS: 1.2, MIN_POWER: 15, MAX_POWER: 100, SHOT_MIN: 350, SHOT_RANGE: 750, COOLDOWN: 0.7, GRAVITY: 900, WIND_MAX: 120, HP: 5, BODY_W: 36, BODY_H: 80, HEAD_R: 14, HEAD_Y: 86, HIT_BODY: 1, HIT_HEAD: 2, COUNTDOWN: 3, INTERPOLATION_MS: 100, ARROW_STICK_MS: 2000, MAX_ARROWS: 100, PLAYER_X: [180, 1100], PLAYER_MIN_X: [60, 720], PLAYER_MAX_X: [560, 1220] });
+});
